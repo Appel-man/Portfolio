@@ -23,6 +23,9 @@ body {
   }
 
 #title {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
     font-family: "Martian Mono", monospace;
     font-weight: 700;
     margin-left: 5%;
