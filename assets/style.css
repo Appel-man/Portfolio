@@ -1,5 +1,4 @@
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     background-color: #1e1100;
 }
@@ -13,10 +12,19 @@ body {
     display: none;
 }
 
+::-moz-selection { /* Code for Firefox */
+    color: #823404;
+    background: #ff8000;
+  }
+  
+  ::selection {
+    color: #823404;
+    background: #ff8000;
+  }
+
 #title {
     font-family: "Martian Mono", monospace;
     font-weight: 700;
-    color: white;
     margin-left: 5%;
     background: linear-gradient(90deg, #ff8000, #be9e51, #823404);
     background-size: 400% 400%;
@@ -28,9 +36,17 @@ body {
 h1,
 h2 {
     z-index: 10;
-    color: #cf6800;
     font-family: Wellfleet;
     margin: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    background: linear-gradient(90deg, #ff8000, #be9e51, #823404);
+    background-size: 400% 400%;
+    animation: glow 3s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
 }
 
 strong,
@@ -40,6 +56,24 @@ p {
     font-family: "Graduate0", sans-serif;
     font-style: normal;
     text-transform: none;
+    position: relative;
+}
+
+a {
+    z-index: 10;
+    font-family: "Graduate0", sans-serif;
+    font-style: normal;
+    text-decoration: none;
+    position: relative;
+}
+
+a:link, a:visited {
+   color: #823404;
+}
+
+a:hover, a:active {
+    color: #cf6800;
+    text-decoration: underline;
 }
 
 #top-bar {
@@ -53,8 +87,8 @@ p {
 }
 
 #top-bar-background {
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     width: 100%;
     height: 3em;
     top: 0;
@@ -75,6 +109,7 @@ p {
 
 @keyframes glow {
     0% {
+        -webkit-filter: blur(0px);
         background-position: 0% 50%;
     }
 
@@ -85,6 +120,25 @@ p {
     100% {
         background-position: 0% 50%;
     }
+}
+
+@keyframes border-glow {
+    0% {
+        border-image: linear-gradient(90deg, #cf6800, #be9e51, #823404);
+    }
+
+    33% {
+        border-image: linear-gradient(90deg,  #cf6800, #be9e51, #823404);
+    }
+
+    66% {
+        border-image: linear-gradient(90deg, #be9e51, #823404, #cf6800);
+    }
+
+    100% {
+        border-image: linear-gradient(90deg, #cf6800, #be9e51, #823404);
+    }
+
 }
 
 #background-image {
@@ -99,7 +153,6 @@ p {
 @keyframes blur {
     0% {
         filter: blur(0px);
-        -webkit-filter: blur(0px);
     }
 
     50% {
@@ -114,20 +167,27 @@ p {
 }
 
 .section {
+    position: relative;
     padding: 2em;
-    border: #cf6800 3px solid;
-    margin-top: 10em;
     background-color: #1e1100;
     background-image: url("media/Texture.png");
     background-repeat:repeat;
     background-blend-mode: multiply;
 }
 
-.wrapper {
+.small-wrapper-border {
     width: 80%;
     transform: translateX(-50%);
     left: 50vw;
+}
+
+.wrapper-border {
+    margin-top: 10em;
+    padding: 3px;
     position: relative;
+    background: linear-gradient(90deg, #cf6800, #be9e51, #823404);
+    background-size: 400% 400%;
+    animation: glow 3s ease infinite;
 }
 
 .center {
