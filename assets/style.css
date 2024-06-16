@@ -1,0 +1,232 @@
+:root {
+    --dark-background: #1e1100;
+    --dark-background-2: #251f11;
+    --dark-color: #823404;
+    --medium-light-color: #ff8000;
+    --medium-dark-color: #cf6800;
+    --light-color: #be9e51;
+}
+
+body {
+    margin: 0;
+    background-color: var(--dark-background);
+}
+
+* {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+::-moz-selection { /* Code for Firefox */
+    color: var(--dark-color);
+    background: var(--medium-light-color);
+  }
+  
+  ::selection {
+    color: var(--dark-color);
+    background: var(--medium-light-color);
+  }
+
+#title {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    font-family: "Martian Mono", monospace;
+    font-weight: 700;
+    margin-left: 5%;
+    background: linear-gradient(90deg, var(--medium-light-color), var(--light-color), var(--dark-color));
+    background-size: 400% 400%;
+    animation: glow 3s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h1,
+h2 {
+    z-index: 10;
+    font-family: Wellfleet;
+    margin: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    background: linear-gradient(90deg, var(--medium-light-color), var(--light-color), var(--dark-color));
+    background-size: 400% 400%;
+    animation: glow 3s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+strong,
+p {
+    z-index: 10;
+    color: var(--light-color);
+    font-family: "Graduate0", sans-serif;
+    font-style: normal;
+    text-transform: none;
+    position: relative;
+}
+
+.strong-title {
+    color: var(--medium-dark-color);
+}
+
+a {
+    z-index: 10;
+    font-family: "Graduate0", sans-serif;
+    font-style: normal;
+    text-decoration: none;
+    position: relative;
+}
+
+a:link, a:visited {
+   color: var(--dark-color);
+}
+
+a:hover, a:active {
+    color: var(--medium-dark-color);
+    text-decoration: underline;
+}
+
+#top-bar {
+    width: 100%;
+    padding: 1em 0;
+    top: 0;
+    position: fixed;
+    text-align: left;
+    opacity: 90%;
+    z-index: 1000;
+}
+
+#top-bar-background {
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    width: 100%;
+    height: 3em;
+    top: 0;
+    z-index: 999;
+    position: fixed;
+}
+
+.glowing-line {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--medium-dark-color), var(--light-color), var(--dark-color));
+    background-size: 400% 400%;
+    animation: glow 3s ease infinite;
+    position: absolute;
+    z-index: 1000;
+    bottom: 0;
+}
+
+@keyframes glow {
+    0% {
+        -webkit-filter: blur(0px);
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes border-glow {
+    0% {
+        border-image: linear-gradient(90deg, var(--medium-dark-color), var(--light-color), var(--dark-color));
+    }
+
+    33% {
+        border-image: linear-gradient(90deg,  var(--medium-dark-color), var(--light-color), var(--dark-color));
+    }
+
+    66% {
+        border-image: linear-gradient(90deg, var(--light-color), var(--dark-color), var(--medium-dark-color));
+    }
+
+    100% {
+        border-image: linear-gradient(90deg, var(--medium-dark-color), var(--light-color), var(--dark-color));
+    }
+
+}
+
+#background-image {
+    position: fixed;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    animation: blur 3s ease infinite;
+}
+
+@keyframes blur {
+    0% {
+        filter: blur(0px);
+    }
+
+    50% {
+        filter: blur(10px);
+        -webkit-filter: blur(10px);
+    }
+
+    100% {
+        filter: blur(0px);
+        -webkit-filter: blur(0px);
+    }
+}
+
+.section {
+    position: relative;
+    padding: 2em;
+    background-color: #1e1100;
+    background-image: url("media/Texture.png");
+    background-repeat:repeat;
+    background-blend-mode: multiply;
+}
+
+.small-wrapper-border {
+    width: 80%;
+    transform: translateX(-50%);
+    left: 50vw;
+}
+
+.wrapper-border {
+    margin-top: 10em;
+    padding: 3px;
+    position: relative;
+    background: linear-gradient(90deg, var(--medium-dark-color), var(--light-color), var(--dark-color));
+    background-size: 400% 400%;
+    animation: glow 3s ease infinite;
+}
+
+.center {
+    text-align: center;
+    display: block;
+}
+
+img.center {
+    margin: 0 auto;
+}
+
+.show-image {
+    width: 49%;
+}
+
+.background-color2 {
+    background-color: var(--dark-background-2);
+}
+
+@media only screen and (max-width: 600px)  {
+    .small-wrapper-border {
+        left: auto;
+        transform: none;
+        width: auto;
+    }
+}
