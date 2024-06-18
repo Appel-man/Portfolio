@@ -276,10 +276,7 @@ footer {
 }
 
 ul.menu {
-    width: max-content;
     position: relative;
-    left: 100%;
-    transform: translateX(-100%);
     list-style: none;
     padding: 0;
 }
