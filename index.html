@@ -23,26 +23,453 @@
     <meta name='og:title' content='Phylixius - Portfolio'>
     <meta name='og:type' content='website'>
     <meta name='og:url' content='http://appel-man.github.io/Portfolio'>
-    <meta name='og:image' content='http://appel-man.github.io/Portfolio/assets/media/Avatar.webp'>
+    <meta name='og:image' content='http://appel-man.github.io/Portfolio/Avatar.webp'>
     <meta name='og:site_name' content='Phylixius - Portfolio'>
     <meta name='og:description'
         content="Phylixius's portfolio: Full-stack webdevelopment, Full-stack software development, Full-stack game development, Cybersecurity, and System- and Network Administration">
     <title>Phylixius - Portfolio</title>
-    <link rel=" icon" type="image/x-icon" href="assets/media/favicon.ico">
-    <link rel=" stylesheet" href="assets/style.css">
+    <link rel=" icon" type="image/x-icon" href="./favicon.ico">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Wellfleet&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;700&family=Wellfleet&family=Graduate&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Enhanced Color Palette */
+            --bg-dark: #0a0500;
+            --bg-darker: #050300;
+            --primary: #ff8000;
+            --primary-dim: #cc6600;
+            --primary-glow: rgba(255, 128, 0, 0.4);
+            --secondary: #be9e51;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --glass-bg: rgba(20, 10, 0, 0.65);
+            --glass-border: rgba(255, 128, 0, 0.2);
+            --font-display: 'Wellfleet', cursive;
+            --font-mono: 'Martian Mono', monospace;
+            --font-body: 'Inter', sans-serif;
+            /* Fallback for "Graduate0" for readability */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-dim);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Selection */
+        ::selection {
+            color: var(--bg-dark);
+            background: var(--primary);
+        }
+
+        /* Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            /* Fallback gradient if canvas fails or takes time */
+            background: radial-gradient(circle at center, #1a0d00 0%, #000000 100%);
+        }
+
+        /* Fallback Image Layer (Original request compatibility) */
+        #background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            object-fit: cover;
+            opacity: 0.15;
+            /* Subtle blend */
+            filter: grayscale(100%) contrast(120%);
+        }
+
+        /* Navigation */
+        #top-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 5, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        #title {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary-glow));
+            background-size: 400% 400%;
+            animation: glow 3s ease infinite;
+            text-shadow: 0 0 10px var(--primary-glow);
+            z-index: 10;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glowing-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: scanline 3s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        #navigator {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .navigator-element {
+            font-family: var(--font-display);
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .navigator-element::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .navigator-element:hover {
+            color: var(--primary);
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .navigator-element:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Hamburger */
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Main Content Container */
+        #content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 8em 1.5em 4em 1.5em;
+            position: relative;
+        }
+
+        /* Cards / Sections */
+        .section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 3em;
+            margin-bottom: 4em;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
+        }
+
+        .section.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Decorative Corners for Cyber feel */
+        .section::before,
+        .section::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 2px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .section::before {
+            top: 0;
+            left: 0;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .section::after {
+            bottom: 0;
+            right: 0;
+            border-left: none;
+            border-top: none;
+        }
+
+        .section:hover::before,
+        .section:hover::after {
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        /* Typography */
+        h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary-glow));
+            background-size: 400% 400%;
+            animation: glow 3s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 128, 0, 0.1);
+        }
+
+        @keyframes glow {
+            0% {
+                -webkit-filter: blur(0px);
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .strong-title {
+            display: block;
+            font-family: var(--font-mono);
+            color: var(--primary);
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        p {
+            margin-bottom: 1.2em;
+            color: var(--text-main);
+            font-size: 1.05rem;
+        }
+
+        a {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 0;
+            transition: all 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--primary);
+            border-bottom-style: solid;
+            text-shadow: 0 0 5px var(--primary-glow);
+        }
+
+        /* Intro Section Specifics */
+        .intro-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #intro img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+            margin-top: 2em;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        #intro img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        /* About Section Links Styling (Tag style for readability) */
+        .section a {
+            display: inline-block;
+            background: rgba(255, 128, 0, 0.05);
+            padding: 0 4px;
+            border-radius: 4px;
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+        }
+
+        .section a:hover {
+            background: rgba(255, 128, 0, 0.2);
+        }
+
+        /* Samples & FAQ Lists */
+        .samples-list p {
+            border-left: 2px solid var(--glass-border);
+            padding-left: 1rem;
+            margin-left: 0.5rem;
+        }
+
+        .faq-item {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 1rem;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3em;
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        ul.menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 790px) {
+            .hamburger {
+                display: block;
+            }
+
+            #navigator {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--bg-dark);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+                border-left: 1px solid var(--glass-border);
+                z-index: 999;
+            }
+
+            #navigator.active {
+                right: 0;
+            }
+
+            .navigator-element {
+                font-size: 1.2rem;
+            }
+
+            #top-bar {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 1.5em;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <img id="background-image" src="assets/media/Xanwood.webp">
-    <div id="top-bar-background"></div>
-    <div id="top-bar" class="background-color2">
+    <!-- Dynamic Background -->
+    <canvas id="bg-canvas"></canvas>
+
+
+    <div id="top-bar">
         <span id="title">Phylixius's Portfolio</span>
         <div class="glowing-line"></div>
+
+        <div class="hamburger" id="hamburger-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+
         <div id="navigator">
             <a class="navigator-element" href="#intro">INTRO</a>
             <a class="navigator-element" href="#about">ABOUT</a>
@@ -50,19 +477,25 @@
             <a class="navigator-element" href="#faq">FAQ</a>
         </div>
     </div>
+
     <div id="content">
+        <!-- Intro Section -->
         <div class="wrapper-border">
-            <section class="section outer background-color2 no-copy">
+            <section class="section outer" id="intro-section">
                 <span class="hash-span" id="intro"> </span>
-                <h1 class="center">Welcome to my Portfolio</h1>
-                <strong class="center strong-title">IT Generalist</strong>
-                <p class="center">Polyglot Programming - CyberSecurity & Ethical Hacking - System and Network
-                    Administration
-                    - Media Production
-                </p>
-                <img class="center" src="assets/media/Avatar.webp" alt="My Roblox Character">
+                <div class="intro-container">
+                    <h1>Welcome to my Portfolio</h1>
+                    <strong class="strong-title">IT Generalist</strong>
+                    <p style="max-width: 600px; text-align: center;">
+                        Polyglot Programming - CyberSecurity & Ethical Hacking - System and Network
+                        Administration - Media Production
+                    </p>
+                    <img src="./Avatar.webp" alt="My Roblox Character">
+                </div>
             </section>
         </div>
+
+        <!-- About Section -->
         <div class="wrapper-border small-wrapper-border">
             <section class="section">
                 <span class="hash-span" id="about"> </span>
@@ -96,7 +529,8 @@
                     <a target="_blank" href="https://discord.com/developers/docs/intro">Bots/Applications</a>, and
                     <a target="_blank"
                         href="https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks">Webhooks</a>.
-                    My <a target="_blank" href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a> knowledge is extensive, having developed various useful projects. I can build both
+                    My <a target="_blank" href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>
+                    knowledge is extensive, having developed various useful projects. I can build both
                     <a target="_blank"
                         href="https://www.linkedin.com/pulse/static-vs-dynamic-website-key-differences-which-use-w0qec">dynamic
                         and static websites</a>
@@ -123,11 +557,15 @@
                     <a target="_blank" href="https://ngrok.com/">NGROK</a>,
                     <a target="_blank" href="https://serveo.net/">Serveo</a>,
                     <a target="_blank" href="https://caddyserver.com/docs/install">Caddy</a>, and
-                    <a target="_blank" href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel</a>.
+                    <a target="_blank"
+                        href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare
+                        Tunnel</a>.
                     I initially used <a target="_blank" href="https://en.wikipedia.org/wiki/JSON">JSON</a> as a
                     <a target="_blank" href="https://en.wikipedia.org/wiki/Database">database</a> before switching to
-                    <a target="_blank" href="https://firebase.google.com/">Firebase</a> and several cloudflare databases using advanced 
-                    <a target="_blank" href="https://en.wikipedia.org/wiki/SQL">SQL</a> queries. I also have experience with
+                    <a target="_blank" href="https://firebase.google.com/">Firebase</a> and several cloudflare databases
+                    using advanced
+                    <a target="_blank" href="https://en.wikipedia.org/wiki/SQL">SQL</a> queries. I also have experience
+                    with
                     <a target="_blank" href="https://www.infinityfree.com/">Infinity Free</a>,
                     <a target="_blank" href="https://freehosting.com/">Freehosting.com</a>, and
                     <a target="_blank" href="https://wordpress.org/">WordPress</a>.
@@ -161,10 +599,12 @@
                     <a target="_blank" href="https://en.wikipedia.org/wiki/Session_hijacking">session hijacking</a>,
                     <a target="_blank" href="https://en.wikipedia.org/wiki/XML_external_entity_attack">XXE</a>,
                     and more. In the real world,
-                    I have learned things like <a target="_blank" href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">MITM</a> using
+                    I have learned things like <a target="_blank"
+                        href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">MITM</a> using
                     <a target="_blank" href="https://en.wikipedia.org/wiki/ARP_spoofing">ARP Poisoning</a> and
                     <a target="_blank" href="https://en.wikipedia.org/wiki/MAC_flooding">MAC Flooding</a>,
-                    advanced <a target="_blank" href="https://en.wikipedia.org/wiki/Social_engineering_(security)">social
+                    advanced <a target="_blank"
+                        href="https://en.wikipedia.org/wiki/Social_engineering_(security)">social
                         engineering</a>,
                     <a target="_blank" href="https://en.wikipedia.org/wiki/DNS_spoofing">DNS spoofing</a>
                     with <a target="_blank" href="https://www.wireshark.org/">Wireshark</a>, and understanding
@@ -174,14 +614,16 @@
                     including <a target="_blank" href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)">RSA</a>,
                     <a target="_blank" href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a>,
                     <a target="_blank" href="https://en.wikipedia.org/wiki/Elliptic-curve_cryptography">ECC</a>,
-                    <a target="_blank" href="https://www.geeksforgeeks.org/computer-networks/electronic-code-book-ecb-in-cryptography/">ECB</a>
+                    <a target="_blank"
+                        href="https://www.geeksforgeeks.org/computer-networks/electronic-code-book-ecb-in-cryptography/">ECB</a>
                     <a target="_blank" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">CBC/CCM</a>,
                     <a target="_blank" href="https://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM</a>,
                     <a target="_blank" href="https://en.wikipedia.org/wiki/Digital_Signature_Algorithm">DCA</a>
                     <a target="_blank" href="https://en.wikipedia.org/wiki/Secure_Hash_Algorithms">SHA</a>,
                     <a target="_blank" href="https://en.wikipedia.org/wiki/MD5">MD5</a>, and
                     <a target="_blank"
-                    href="https://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_1.0,_2.0,_and_3.0">TLS/SSL</a>, and how certifications work:
+                        href="https://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_1.0,_2.0,_and_3.0">TLS/SSL</a>,
+                    and how certifications work:
                     <a target="_blank" href="https://en.wikipedia.org/wiki/Certificate_authority">CA</a> and
                     <a target="_blank" href="https://en.wikipedia.org/wiki/Registration_authority">RA</a>.
                 </p>
@@ -205,15 +647,18 @@
                     Additionally, I am skilled in using <a target="_blank"
                         href="https://en.wikipedia.org/wiki/Virtual_machine">Virtual Machines</a>
                     such as <a target="_blank" href="https://www.vmware.com/">VMWare</a>,
-                    <a target="_blank" href="https://www.virtualbox.org/">Virtual Box</a>, <a target="_blank" href="https://en.m.wikipedia.org/wiki/Hyper-V" target="_blank" rel="noopener noreferrer">Hyper -V</a>
+                    <a target="_blank" href="https://www.virtualbox.org/">Virtual Box</a>, <a target="_blank"
+                        href="https://en.m.wikipedia.org/wiki/Hyper-V" target="_blank" rel="noopener noreferrer">Hyper
+                        -V</a>
                     and
                     <a target="_blank"
                         href="https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/windows-sandbox-overview">Windows
                         Sandbox</a>. Currently, I go to college also learning System- and Network Administration.
+            </section>
         </div>
-        
+
         <div class="wrapper-border small-wrapper-border">
-            <section class="section">
+            <section class="section samples-list">
                 <span class="hash-span" id="samples"> </span>
                 <h1 class="center">SAMPLES</h1>
                 <p>
@@ -247,15 +692,20 @@
                     and my cousin own.
                 </p>
                 <p>
-                    <a target="_blank" href="https://www.roblox.com/communities/2808906/The-Robine#!/about">The Robine</a> is also a Half-Life 2
+                    <a target="_blank" href="https://www.roblox.com/communities/2808906/The-Robine#!/about">The
+                        Robine</a> is also a Half-Life 2
                     fan-made project, 350K members
                 </p>
                 <p>
-                        <a target="_blank" href="https://www.roblox.com/communities/5442437/United-Valarian-Confederation#!/about">United Valarian Confederation</a> I
-                        was commissioned to optimize their gun system
+                    <a target="_blank"
+                        href="https://www.roblox.com/communities/5442437/United-Valarian-Confederation#!/about">United
+                        Valarian Confederation</a> I
+                    was commissioned to optimize their gun system
                 </p>
                 <p>
-                    <a target="_blank" href="https://www.roblox.com/communities/17049589/Federal-Republic-of-Noobia#!/about">Federal Republic of Noobia</a> A noob inspired
+                    <a target="_blank"
+                        href="https://www.roblox.com/communities/17049589/Federal-Republic-of-Noobia#!/about">Federal
+                        Republic of Noobia</a> A noob inspired
                     army
                 </p> <br>
 
@@ -301,7 +751,8 @@
                     <a target="_blank" href="https://www.roblox.com/games/5715871774/City-Of-Souls">City of Souls</a> is
                     a
                     <a target="_blank"
-                        href="https://www.roblox.com/games/8166050209/Downtown-RP-Memories">Downtown-RP</a>-inspired variant made
+                        href="https://www.roblox.com/games/8166050209/Downtown-RP-Memories">Downtown-RP</a>-inspired
+                    variant made
                     by me and my cousin.
                 </p>
                 <p>
@@ -312,7 +763,8 @@
                 </p>
                 <p>
                     <a target="_blank" href="https://www.roblox.com/games/13975122579/Warfare-17-Alpha">Warfare 17</a>
-                    is an unfinished Half-life 2-inspired variant but more focused on combat. The concept was that you can choose 3 teams.
+                    is an unfinished Half-life 2-inspired variant but more focused on combat. The concept was that you
+                    can choose 3 teams.
                     Resistance:
                     gain special abilities like healing or leading, other weapons, and vehicle hijacking. Combine: gain
                     access
@@ -328,86 +780,114 @@
             </section>
         </div>
         <div class="wrapper-border small-wrapper-border">
-            <section class="section">
+            <section class="section faq-list">
                 <span class="hash-span" id="faq"> </span>
                 <h1 class="center">FREQUENTLY ASKED QUESTIONS</h1>
                 <br> <br>
 
-                <strong class="strong-title">What services do you provide?</strong>
-                <p>
-                    I can program you whole Roblox games, programs & scripts, and static websites.
-                </p> <br>
+                <div class="faq-item">
+                    <strong class="strong-title">What services do you provide?</strong>
+                    <p>
+                        I can program you whole Roblox games, programs & scripts, and static websites.
+                    </p>
+                </div>
 
-                <strong class="strong-title">What can you make on Roblox?</strong>
-                <p>
-                    I can make almost everything as long as it doesn't come to these anime effects or math-heavy
-                    algorithms. Some common
-                    examples are an advanced TPS (Third Person Shooter) gun system with real bullets fully optimized,
-                    Round systems,
-                    menus, complex NPCs, and more.
-                </p> <br>
+                <div class="faq-item">
+                    <strong class="strong-title">What can you make on Roblox?</strong>
+                    <p>
+                        I can make almost everything as long as it doesn't come to these anime effects or math-heavy
+                        algorithms. Some common
+                        examples are an advanced TPS (Third Person Shooter) gun system with real bullets fully
+                        optimized,
+                        Round systems,
+                        menus, complex NPCs, and more.
+                    </p>
+                </div>
 
-                <strong class="strong-title">What is your time zone?</strong>
-                <p>
-                    I live in Belgium so my timezone is CEST/GMT+1. The time for me currently is
-                    <a target="_blank" href="https://www.google.com/search?q=cest+time">this</a>.
-                </p> <br>
+                <div class="faq-item">
+                    <strong class="strong-title">What is your time zone?</strong>
+                    <p>
+                        I live in Belgium so my timezone is CEST/GMT+1. The time for me currently is
+                        <a target="_blank" href="https://www.google.com/search?q=cest+time">this</a>.
+                    </p>
+                </div>
 
-                <strong class="strong-title">When are you available?</strong>
-                <p>
-                    I can work almost every week. However, you can
-                    contact me 24/7.
-                </p> <br>
+                <div class="faq-item">
+                    <strong class="strong-title">When are you available?</strong>
+                    <p>
+                        I can work almost every week. However, you can
+                        contact me 24/7.
+                    </p>
+                </div>
 
-                <strong class="strong-title">How much do you charge?</strong>
-                <p>
-                    You might not like the answer and heard it a lot, but it depends on the task. There isn't a "one
-                    price for all"
-                    thing. But I can give you a good representation. The lowest I generally go is 10 euros for a task
-                    that takes
-                    less than an hour, and 100 euros that takes two days. It also depends on the complexity, a one-hour
-                    task
-                    can cost more than usual.
-                </p> <br>
+                <div class="faq-item">
+                    <strong class="strong-title">How much do you charge?</strong>
+                    <p>
+                        You might not like the answer and heard it a lot, but it depends on the task. There isn't a "one
+                        price for all"
+                        thing. But I can give you a good representation. The lowest I generally go is 10 euros for a
+                        task
+                        that takes
+                        less than an hour, and 100 euros that takes two days. It also depends on the complexity, a
+                        one-hour
+                        task
+                        can cost more than usual.
+                    </p>
+                </div>
 
-                <strong class="strong-title">What payment method do you accept?</strong>
-                <p>
-                    I only accept euros through <a target="_blank" href="https://www.paypal.com/">PayPal</a> per task.
-                    If
-                    you can not
-                    pay with euro's, then I do accept Robux but 3 times more. I do not accept percentages.
-                </p> <br>
+                <div class="faq-item">
+                    <strong class="strong-title">What payment method do you accept?</strong>
+                    <p>
+                        I only accept euros through <a target="_blank" href="https://www.paypal.com/">PayPal</a> per
+                        task.
+                        If
+                        you can not
+                        pay with euro's, then I do accept Robux but 3 times more. I do not accept percentages.
+                    </p>
+                </div>
 
-                <strong class="strong-title">Why do you only accept PayPal?</strong>
-                <p>
-                    The reason is that I can't do anything with Robux. It's just a virtual currency that you can only
-                    do one
-                    thing with, kind of like a gift card for Walmart. I am not a child anymore and have a life in the
-                    real
-                    world. I am trying to make this a semi-job.
-                </p> <br>
+                <div class="faq-item">
+                    <strong class="strong-title">Why do you only accept PayPal?</strong>
+                    <p>
+                        The reason is that I can't do anything with Robux. It's just a virtual currency that you can
+                        only
+                        do one
+                        thing with, kind of like a gift card for Walmart. I am not a child anymore and have a life in
+                        the
+                        real
+                        world. I am trying to make this a semi-job.
+                    </p>
+                </div>
 
-                <strong class="strong-title">How does the process work?</strong>
-                <p>
-                    So when you contact me, I will reply ASAP and maybe ask you some questions. If you need a script,
-                    please be as clear
-                    as possible and explain every detail. I do not add things up that I don't think you asked/needed. We
-                    will
-                    negotiate the price beforehand and once everything is ready I start on the project. I am not a GUI
-                    designer
-                    nor a builder which means I don't make them. If I am missing elements then I add them myself but
-                    don't expect
-                    great results then.
-                </p> <br>
+                <div class="faq-item">
+                    <strong class="strong-title">How does the process work?</strong>
+                    <p>
+                        So when you contact me, I will reply ASAP and maybe ask you some questions. If you need a
+                        script,
+                        please be as clear
+                        as possible and explain every detail. I do not add things up that I don't think you
+                        asked/needed. We
+                        will
+                        negotiate the price beforehand and once everything is ready I start on the project. I am not a
+                        GUI
+                        designer
+                        nor a builder which means I don't make them. If I am missing elements then I add them myself but
+                        don't expect
+                        great results then.
+                    </p>
+                </div>
 
-                <strong class="strong-title">How can I contact you?</strong>
-                <p>
-                    You can contact me on Discord, my user is <a
-                        href="https://discord.com/users/458641461743845397">phylixius</a>.
-                </p>
+                <div class="faq-item">
+                    <strong class="strong-title">How can I contact you?</strong>
+                    <p>
+                        You can contact me on Discord, my user is <a
+                            href="https://discord.com/users/458641461743845397">phylixius</a>.
+                    </p>
+                </div>
             </section>
         </div>
     </div>
+
     <div class="footer-wrapper-border">
         <footer class="background-color2">
             <ul class="menu">
@@ -416,6 +896,128 @@
             </ul>
         </footer>
     </div>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger-btn');
+        const nav = document.getElementById('navigator');
+        const navLinks = document.querySelectorAll('.navigator-element');
+
+        hamburger.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Network Node Background Animation
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let particles = [];
+
+        // Configuration
+        const particleCount = 60;
+        const connectionDistance = 150;
+        const primaryColor = 'rgba(255, 128, 0, 0.8)';
+        const secondaryColor = 'rgba(190, 158, 81, 0.3)';
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce off edges
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = primaryColor;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Update and draw particles
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Draw connections
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255, 128, 0, ${1 - dist / connectionDistance})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        initParticles();
+        animate();
+    </script>
 </body>
 
 </html>
